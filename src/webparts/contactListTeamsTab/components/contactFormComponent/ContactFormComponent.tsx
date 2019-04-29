@@ -5,7 +5,7 @@ import styles from "./ContactFormComponent.module.scss";
 
 export interface IFormComponentState {
     name: string;
-    phoneNumber: number;
+    phone: string;
     email: string;
     image: string;
     id: number;
@@ -19,22 +19,30 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
         super(props);
         this.state = {
             name: '',
-            phoneNumber: 0,
+            phone: '',
             email: '',
             image: '',
-            id: 0
+            id: this.props.id
         }
         this.onAdd = this.props.onSubmit;
     }
 
     public handleSubmit(event) {
         event.preventDefault();
-
         this.onAdd(this.state);
     }
 
     public onFilesChange(files) {
-        console.log(files)
+
+        let [file] = files;
+
+        let reader = new FileReader();
+        
+        reader.onloadend = () => this.setState({ image: reader.result.toString()});
+
+        if(file) {
+            reader.readAsDataURL(file);
+        }
     }
 
     public onFilesError(error, file) {
@@ -51,18 +59,18 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <label>Contact phone: </label>
             <input type="number" 
                     placeholder="Enter Phone Number"
-                    onChange={(event) => this.setState({phoneNumber: 225555})}/>
+                    onChange={(event) => this.setState({phone: event.target.value})}/>
             <label>Contact e-mail: </label>
             <input type="text" 
                     placeholder="Enter email" 
-                    onChange={(event) => this.setState({email: 'event.target.value'})}/>
+                    onChange={(event) => this.setState({email: event.target.value})}/>
             
             <div className="files">
             <label>Photo: </label>
             <Files
                 className={styles.filesDropzone}
-                onChange={this.onFilesChange}
-                onError={this.onFilesError}
+                onChange={this.onFilesChange.bind(this)}
+                onError={this.onFilesError.bind(this)}
                 accepts={['image/png',]}
                 maxFiles={1}
                 maxFileSize={1000000}

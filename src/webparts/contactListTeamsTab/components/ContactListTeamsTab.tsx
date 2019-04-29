@@ -2,6 +2,7 @@ import * as React from 'react';
 import styles from './ContactListTeamsTab.module.scss';
 import { IContactListTeamsTabProps } from './IContactListTeamsTabProps';
 import { ContactFormComponent } from './contactFormComponent/ContactFormComponent'
+import { ContactListComponent } from './contactListComponent/ContactListComponent'
 
 export default class ContactListTeamsTab extends React.Component<IContactListTeamsTabProps, {}> {
   public render(): React.ReactElement<IContactListTeamsTabProps> {
@@ -10,7 +11,7 @@ export default class ContactListTeamsTab extends React.Component<IContactListTea
         <div className={ styles.container }>
           <div className={ styles.row }>
             <div className={ styles.column }>
-              <ContactFormComponent/>
+              <ContactListComponent/>
             </div>
           </div>
         </div>

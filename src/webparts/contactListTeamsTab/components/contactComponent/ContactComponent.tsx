@@ -1,4 +1,7 @@
 import * as React from 'react';
+import {ContactFormComponent} from '../contactFormComponent/ContactFormComponent'
+
+import styles from './ContactComponent.module.scss';
 
 export interface IContactComponentState {
     isOpened: boolean;
@@ -6,7 +9,7 @@ export interface IContactComponentState {
 }
 
 
-export class ContactComponent extends React.Component<{}, IContactComponentState> {
+export class ContactComponent extends React.Component<any, IContactComponentState> {
 
     constructor() {
         super({});
@@ -33,25 +36,25 @@ export class ContactComponent extends React.Component<{}, IContactComponentState
         let detailedInfo;
         if(this.state.isOpened) {
             detailedInfo = (<React.Fragment>
-            <div className="contact-number"> {this.props.phoneNumber} </div>
+            <div className="contact-number"> {this.props.phone} </div>
             <div className="contact-email"> {this.props.email} </div>
             </React.Fragment>
         )}
 
         let showEditForm;
         if(this.state.isEdit) {
-            showEditForm = (<FormComponent name={this.props.name} 
-                                                email={this.props.age} 
-                                                phoneNumber={this.props.phoneNumber}
+            showEditForm = (<ContactFormComponent name={this.props.name} 
+                                                email={this.props.email} 
+                                                phone={this.props.phone}
                                                 id={this.props.id}
-                                                onEdit={this.props.onEdit}
+                                                onSubmit={this.props.onSubmit}
                                                 image={this.props.image}/>)
         }
 
             return (
-                <div>
-                <li className="contact" onClick={this.handleOpened.bind(this)}>
-                    <img className="contact-image" src={this.props.image} alt="" width="60px" height="60px" />
+                <div className={styles.contact}>
+                <li className={styles.content} onClick={this.handleOpened.bind(this)}>
+                    <img className={styles.contactImage} src={this.props.image} alt="" width="60px" height="60px" />
                     <div className="contact-info">
                         <div className="contact-name"> {this.props.name} </div>
                         {detailedInfo}
