@@ -9,7 +9,7 @@
     "declaration": true,
     "sourceMap": true,
     "experimentalDecorators": true,
-    "skipLibCheck": true,
+    // "skipLibCheck": true,
     "outDir": "lib",
     "inlineSources": false,
     "noImplicitAny": false,

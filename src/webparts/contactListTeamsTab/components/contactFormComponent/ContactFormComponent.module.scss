@@ -1,0 +1,52 @@
+@import '../../common/variables.module.scss';
+
+.generalForm {
+    & > * {
+        display: block;
+    }
+
+    label {
+        color: $primary-color-dark;
+        font-weight: bold;
+
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    input {
+        padding: 5px 10px;
+    }
+
+    & > div {
+        label {
+            color: $primary-color-dark;
+            font-weight: bold;
+        }
+
+        margin-top: 10px;
+        margin-bottom: 5px; 
+    }
+
+    .filesDropzone {
+        margin-top: 5px;
+        padding: 20px;
+        border: 2px dashed $accent-color;
+        border-radius: 6px;
+    }
+
+    & > *:last-child {
+        margin-top: 10px;
+    }
+
+    button {
+        color: $primary-color-text;
+        font-weight: bold;
+
+        border: 2px dashed $accent-color;
+        border-radius: 6px;
+
+        background-color: $accent-color;
+
+        padding: 5px 10px;
+    }
+}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Files from 'react-files';
 
+import styles from "./ContactFormComponent.module.scss";
 
 export interface IFormComponentState {
     name: string;
@@ -28,8 +29,8 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
 
     public handleSubmit(event) {
         event.preventDefault();
-        this.onAdd(this.state);
 
+        this.onAdd(this.state);
     }
 
     public onFilesChange(files) {
@@ -42,7 +43,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
 
     render() {
         return (
-        <form onSubmit={this.handleSubmit.bind(this)} className="general-form">
+        <form onSubmit={this.handleSubmit.bind(this)} className={styles.generalForm}>
             <label>Contact name: </label>
             <input type="text" 
                     placeholder="Enter name" 
@@ -59,7 +60,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <div className="files">
             <label>Photo: </label>
             <Files
-                className="files-dropzone"
+                className={styles.filesDropzone}
                 onChange={this.onFilesChange}
                 onError={this.onFilesError}
                 accepts={['image/png',]}
