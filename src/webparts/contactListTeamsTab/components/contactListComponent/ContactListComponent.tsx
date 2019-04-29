@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ContactComponent } from '../contactComponent/ContactComponent';
 import { ContactFormComponent } from '../contactFormComponent/ContactFormComponent';
 import * as _ from '@microsoft/sp-lodash-subset';
-
+import {SharePointRestService} from '../../services/SharePointRestService'
 import styles from "./ContactListComponent.module.scss";
 
 export interface IContactListComponentState {
@@ -34,6 +34,7 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
             displayedContacts: this.CONTACTS,
             isAdd: false
         }
+        SharePointRestService.fetchContacts();
     }
 
     handleSearch(event) {

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './ContactListTeamsTab.module.scss';
 import { IContactListTeamsTabProps } from './IContactListTeamsTabProps';
-import { ContactFormComponent } from './contactFormComponent/ContactFormComponent'
 import { ContactListComponent } from './contactListComponent/ContactListComponent'
 
 export default class ContactListTeamsTab extends React.Component<IContactListTeamsTabProps, {}> {
