@@ -68,6 +68,7 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         this.setState({
             displayedContacts: this.CONTACTS
         })
+        SharePointRestService.addContacts(newContact);
     }
 
     handleAdd() {
