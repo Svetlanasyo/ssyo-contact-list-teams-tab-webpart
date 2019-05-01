@@ -1,4 +1,6 @@
-import { sp, Items } from '@pnp/sp';
+import { sp, ItemAddResult } from '@pnp/sp';
+import { AttachmentFileAddResult } from '@pnp/sp';
+
 
 export class SharePointRestService {
 
@@ -10,7 +12,20 @@ export class SharePointRestService {
     }
 
     static fetchAttachement(Id) {
-        return sp.web.lists.getByTitle("Contact List").items.getById(Id).attachmentFiles.get().then(v => v[0].ServerRelativeUrl);
+        return sp.web.lists.getByTitle("Contact List").items.getById(Id).attachmentFiles.get().then(v => v[0] ? v[0].ServerRelativeUrl : "");
+    }
+
+    static addContacts(contact) {
+        return sp.web.lists.getByTitle("Contact List").items.add({
+            Title: contact.name,
+            j1d0: contact.email,
+            z4n7: contact.phone,
+            // Id: contact.id,
+        }).then((iar: ItemAddResult) => {
+            
+            return sp.web.lists.getByTitle("Contact List").items.getById(iar.data.Id)
+            .attachmentFiles.add(contact.file.name, contact.file);
+        }
+        );
     }
 }
-

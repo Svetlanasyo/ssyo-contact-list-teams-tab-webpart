@@ -9,6 +9,7 @@ export interface IFormComponentState {
     email: string;
     image: string;
     id: number;
+    file: File
 }
 
 export class ContactFormComponent extends React.Component<any, IFormComponentState> {
@@ -22,7 +23,8 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             phone: '',
             email: '',
             image: '',
-            id: this.props.id
+            id: this.props.id,
+            file: null
         }
         this.onAdd = this.props.onSubmit;
     }
@@ -38,7 +40,10 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
 
         let reader = new FileReader();
         
-        reader.onloadend = () => this.setState({ image: reader.result.toString()});
+        reader.onloadend = () => this.setState({ 
+            image: reader.result.toString(),
+            file: file
+        });
 
         if(file) {
             reader.readAsDataURL(file);
