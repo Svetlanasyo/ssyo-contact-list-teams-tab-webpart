@@ -61,7 +61,16 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         this.setState({
             displayedContacts: this.CONTACTS
         }) 
-        SharePointRestService.editContacts(editContact)
+        SharePointRestService.editContacts(editContact).then(() => {
+            SharePointRestService.fetchContacts().then((items) => {
+                this.CONTACTS = items;
+                console.log(this.CONTACTS);
+                this.setState({
+                    displayedContacts: this.CONTACTS
+                })
+            });
+        });
+
     }
 
     handleCreate(newContact) {
