@@ -47,7 +47,7 @@ export class ContactComponent extends React.Component<any, IContactComponentStat
                                                 email={this.props.email} 
                                                 phone={this.props.phone}
                                                 id={this.props.id}
-                                                onSubmit={this.props.onSubmit}
+                                                onSubmit={(e)=> {this.props.onSubmit(e); this.handleEdit()}}
                                                 image={this.props.image}/>)
         }
 
