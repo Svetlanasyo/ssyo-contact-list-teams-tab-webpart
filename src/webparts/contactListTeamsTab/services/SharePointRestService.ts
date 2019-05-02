@@ -28,4 +28,21 @@ export class SharePointRestService {
         }
         );
     }
+
+    static editContacts(contact) {
+        sp.web.lists.getByTitle("Contact List").items.getById(contact.id).update({
+            Title: contact.name,
+            j1d0: contact.email,
+            z4n7: contact.phone,
+        }).then((iar: ItemAddResult) => {
+            console.log(iar.data)
+            return sp.web.lists.getByTitle("Contact List").items.getById(contact.id)
+            .attachmentFiles.get().then((v) => {
+                console.log(v);
+                return sp.web.lists.getByTitle("Contact List").items.getById(contact.id)
+                .attachmentFiles.getByName(v[0].FileName).setContent(contact.file)
+            });
+        }
+        );
+    }
 }
