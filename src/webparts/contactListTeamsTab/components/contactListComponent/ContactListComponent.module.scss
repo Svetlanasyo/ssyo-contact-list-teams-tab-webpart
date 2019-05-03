@@ -24,3 +24,23 @@
     border: 2px dashed $primary-color;
     border-radius: 6px;
 }
+
+.pagination {
+
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+
+    li {
+        display: inline;
+        padding: 4px;
+        margin: 2px;
+
+        a {
+            text-decoration: none;
+            color: $primary-color;
+            font-weight: bold;
+        }
+    }
+}
