@@ -4,10 +4,12 @@ import { ContactFormComponent } from '../contactFormComponent/ContactFormCompone
 import * as _ from '@microsoft/sp-lodash-subset';
 import {SharePointRestService} from '../../services/SharePointRestService'
 import styles from "./ContactListComponent.module.scss";
+import Pagination from "react-js-pagination";
 
 export interface IContactListComponentState {
     displayedContacts: any[];
     isAdd: boolean;
+    activePage: number;
 }
 
 export class ContactListComponent extends React.Component<{}, IContactListComponentState> {
@@ -32,7 +34,8 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         this.state = 
         {
             displayedContacts: this.CONTACTS,
-            isAdd: false
+            isAdd: false,
+            activePage: 1,
         }
         SharePointRestService.fetchContacts().then((items) => {
             this.CONTACTS = items;
@@ -97,6 +100,11 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         }) 
     }
 
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        this.setState({activePage: pageNumber});
+    }
+
     
     render() {
 
@@ -118,9 +126,20 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
                 {showCreateForm}
                 </div>
                 <input type="text" className={styles.searchField} onChange={this.handleSearch.bind(this)} placeholder="Search" />
+                <div className={styles.pagination}>
+                    <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={2}
+                    totalItemsCount={this.state.displayedContacts.length}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                    />
+                </div>
                 <ul className={styles.contactList}>
-                    {
-                       this.state.displayedContacts.map((el) => {
+                    {   
+                       this.state.displayedContacts
+                       .slice((this.state.activePage-1)*2, (this.state.activePage-1)*2+2)
+                       .map((el) => {
                             return <ContactComponent
                                 key={el.id}
                                 id={el.id}
