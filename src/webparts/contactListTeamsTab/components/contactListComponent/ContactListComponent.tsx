@@ -114,10 +114,10 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         return (
             <div className="contacts">
                 <div className="create-form">
-                <button className="editButton" onClick={this.handleAdd.bind(this)}>Add new contact</button>
+                <button className={styles.addButton} onClick={this.handleAdd.bind(this)}>Add new contact</button>
                 {showCreateForm}
                 </div>
-                <input type="text" className="search-field" onChange={this.handleSearch.bind(this)} placeholder="Search" />
+                <input type="text" className={styles.searchField} onChange={this.handleSearch.bind(this)} placeholder="Search" />
                 <ul className={styles.contactList}>
                     {
                        this.state.displayedContacts.map((el) => {
