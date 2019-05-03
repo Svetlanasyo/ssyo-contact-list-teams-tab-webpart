@@ -1,9 +1,54 @@
+@import '../../common/variables.module.scss';
+
 .contact {
+
     .content {
         list-style-type: none;
+        margin: 5px;
+        border: 2px solid $primary-color;
 
         .contactImage {
             border-radius: 50%;
+            border-color: $primary-color-light;
         }
+
+        .nameLabel { 
+            font-weight: bolder;
+            color: $primary-color;
+            word-wrap: break-word;
+        }
+
+        .detailedInfoLabel {
+            font-size: 80%;
+            font-weight: bold;
+            color: $primary-color;
+        }
+
+        .detailedInfoSpan {
+            font-size: 80%;
+            color: $secondary-text-color;
+            font-style: italic;
+        }
+
+        .contactName {
+            margin: 2px;
+            display: grid;
+            grid-template-columns: 35% 60%;
+            grid-template-rows: auto;
+            grid-column-gap: 5px;
+            padding: 2px;
+            text-align: center;
+        }
+
+    }
+
+    .editButton { 
+        color: $primary-color-text;
+        font-weight: bold;
+        border: 2px dashed $accent-color;
+        border-radius: 6px;  
+        background-color: $accent-color;   
+        padding: 5px 10px; 
     }
 }
+

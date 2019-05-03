@@ -36,8 +36,14 @@ export class ContactComponent extends React.Component<any, IContactComponentStat
         let detailedInfo;
         if(this.state.isOpened) {
             detailedInfo = (<React.Fragment>
-            <div className="contact-number"> {this.props.phone} </div>
-            <div className="contact-email"> {this.props.email} </div>
+            <div className="contact-number"> 
+                <label className={styles.detailedInfoLabel}>Phone: </label>
+                <span className={styles.detailedInfoSpan}>{this.props.phone}</span>
+            </div>
+            <div className="contact-email">
+                <label className={styles.detailedInfoLabel}>E-mail: </label>
+                <span className={styles.detailedInfoSpan}>{this.props.email}</span>
+            </div>
             </React.Fragment>
         )}
 
@@ -54,13 +60,15 @@ export class ContactComponent extends React.Component<any, IContactComponentStat
             return (
                 <div className={styles.contact}>
                 <li className={styles.content} onClick={this.handleOpened.bind(this)}>
-                    <img className={styles.contactImage} src={this.props.image} alt="" width="60px" height="60px" />
                     <div className="contact-info">
-                        <div className="contact-name"> {this.props.name} </div>
+                        <div className={styles.contactName}>
+                            <img className={styles.contactImage} src={this.props.image} alt="" width="50px" height="50px" />
+                            <label className={styles.nameLabel}>{this.props.name}</label>  
+                        </div>
                         {detailedInfo}
                     </div>   
                 </li>
-                <button className="editButton" onClick={this.handleEdit.bind(this)}>Edit</button>
+                <button className={styles.editButton} onClick={this.handleEdit.bind(this)}>Edit</button>
                 {showEditForm}
                 </div>
             );
