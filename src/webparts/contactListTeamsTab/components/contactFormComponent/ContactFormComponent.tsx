@@ -19,10 +19,10 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            phone: '',
-            email: '',
-            image: '',
+            name: props.name || '',
+            phone: props.phone || '',
+            email: props.email || '',
+            image: props.image || '',
             id: this.props.id,
             file: null
         }
@@ -60,15 +60,21 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <label>Contact name: </label>
             <input type="text" 
                     placeholder="Enter name" 
-                    onChange={(event) => this.setState({name: event.target.value})}/>
+                    onChange={(event) => this.setState({name: event.target.value})}
+                    required
+                    value={this.state.name}/>
             <label>Contact phone: </label>
             <input type="number" 
                     placeholder="Enter Phone Number"
-                    onChange={(event) => this.setState({phone: event.target.value})}/>
+                    onChange={(event) => this.setState({phone: event.target.value})}
+                    required
+                    value={this.state.phone}/>
             <label>Contact e-mail: </label>
             <input type="text" 
                     placeholder="Enter email" 
-                    onChange={(event) => this.setState({email: event.target.value})}/>
+                    onChange={(event) => this.setState({email: event.target.value})}
+                    required
+                    value={this.state.email}/>
             
             <div className="files">
             <label>Photo: </label>

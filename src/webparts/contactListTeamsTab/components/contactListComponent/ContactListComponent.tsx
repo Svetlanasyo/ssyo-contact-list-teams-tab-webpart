@@ -110,12 +110,9 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
 
         let showCreateForm;
         if(this.state.isAdd) {
-            showCreateForm= (<ContactFormComponent name='Enter name'
-                                                email='Enter email'
-                                                phone='22 8888888'
+            showCreateForm= (<ContactFormComponent 
                                                 id={this.CONTACTS.length+1}
                                                 onSubmit={this.handleCreate.bind(this)}
-                                                image=''
                              />)
         }
 
