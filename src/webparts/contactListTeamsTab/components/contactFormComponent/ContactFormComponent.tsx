@@ -72,6 +72,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <input type="text" 
                     placeholder="Enter name"
                     required 
+                    value={this.state.name}
                     onChange={(event) => {
                         this.isValidateLength(event, 30) ? this.setState({errorNameMessage:'Your name must be only 30 symbols'}):
                         this.setState({name: event.target.value, errorNameMessage: ""});
@@ -82,6 +83,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <input type="number" 
                     placeholder="Enter Phone Number"
                     required 
+                    value={this.state.phone}
                     onChange={(event) => {
                         this.isValidateLength(event, 10) ? this.setState({errorPhoneMessage:'Your phone must be only 10 symbols'}):
                         this.setState({phone: event.target.value, errorPhoneMessage:""})
