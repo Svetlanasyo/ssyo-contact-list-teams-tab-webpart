@@ -9,7 +9,9 @@ export interface IFormComponentState {
     email: string;
     image: string;
     id: number;
-    file: File
+    file: File;
+    errorNameMessage: string;
+    errorPhoneMessage: string;
 }
 
 export class ContactFormComponent extends React.Component<any, IFormComponentState> {
@@ -24,7 +26,9 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             email: '',
             image: '',
             id: this.props.id,
-            file: null
+            file: null,
+            errorNameMessage: '',
+            errorPhoneMessage:'',
         }
         this.onAdd = this.props.onSubmit;
     }
@@ -54,20 +58,39 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
         console.log('error code '+error.code + ': ' + error.message)
     }
 
+    public isValidateLength(e, maxLength) { 
+        const val = e.currentTarget.value;
+        const max = maxLength;
+        console.log(val.length > max);
+        return val.length > max
+    }
+
     render() {
         return (
         <form onSubmit={this.handleSubmit.bind(this)} className={styles.generalForm}>
             <label>Contact name: </label>
             <input type="text" 
-                    placeholder="Enter name" 
-                    onChange={(event) => this.setState({name: event.target.value})}/>
+                    placeholder="Enter name"
+                    required 
+                    onChange={(event) => {
+                        this.isValidateLength(event, 30) ? this.setState({errorNameMessage:'Your name must be only 30 symbols'}):
+                        this.setState({name: event.target.value, errorNameMessage: ""});
+                    } }/>
+            <label className={styles.errorMessage}>{this.state.errorNameMessage}</label>
+                    
             <label>Contact phone: </label>
             <input type="number" 
                     placeholder="Enter Phone Number"
-                    onChange={(event) => this.setState({phone: event.target.value})}/>
+                    required 
+                    onChange={(event) => {
+                        this.isValidateLength(event, 10) ? this.setState({errorPhoneMessage:'Your phone must be only 10 symbols'}):
+                        this.setState({phone: event.target.value, errorPhoneMessage:""})
+                    }}/>
+            <label className={styles.errorMessage}>{this.state.errorPhoneMessage}</label>
             <label>Contact e-mail: </label>
-            <input type="text" 
+            <input type="email" 
                     placeholder="Enter email" 
+                    required 
                     onChange={(event) => this.setState({email: event.target.value})}/>
             
             <div className="files">

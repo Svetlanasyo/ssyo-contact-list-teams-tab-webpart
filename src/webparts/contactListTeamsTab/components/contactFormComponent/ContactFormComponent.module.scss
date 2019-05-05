@@ -38,8 +38,14 @@
         margin-top: 10px;
     }
 
+    .errorMessage {
+        color: red;
+        font-size: 90%;
+        font-weight: bold;
+    }
+
     button {
-        color: $primary-color-text;
+        color: $primary-color-text; 
         font-weight: bold;
 
         border: 2px dashed $accent-color;
