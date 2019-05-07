@@ -13,7 +13,11 @@ export interface IContactListComponentState {
     activePage: number;
 }
 
-export class ContactListComponent extends React.Component<{}, IContactListComponentState> {
+export interface IContactListComponentProps {
+    listName: string
+}
+
+export class ContactListComponent extends React.Component<IContactListComponentProps, IContactListComponentState> {
 
     private CONTACTS = [{
         id: 1,
@@ -30,21 +34,35 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         email: 'leia@starwars.com'
     }]
 
-    
-
-    constructor() {
-        super({});
+    constructor(props) {
+        super(props);
         this.state = {
             displayedContacts: [],
             isAdd: false,
             activePage: 1,
         }
+        console.log(Environment.type)
         if (Environment.type === EnvironmentType.Local) {
-            this.setState({
+            this.state = {
                 displayedContacts: this.CONTACTS,
-            })
+                isAdd: false,
+                activePage: 1,
+            }
+            console.log(this.state.displayedContacts)
         } else {
-            SharePointRestService.fetchContacts().then((items) => {
+            SharePointRestService.fetchContacts(this.props.listName).then((items) => {
+                this.CONTACTS = items;
+                console.log(this.CONTACTS);
+                this.setState({
+                    displayedContacts: this.CONTACTS,
+                })
+            })
+        }
+    }
+
+    componentWillUpdate(nextProps) {
+        if (nextProps.listName !== this.props.listName) {
+            SharePointRestService.fetchContacts(nextProps.listName).then((items) => {
                 this.CONTACTS = items;
                 console.log(this.CONTACTS);
                 this.setState({
@@ -72,8 +90,8 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         this.setState({
             displayedContacts: this.CONTACTS
         }) 
-        SharePointRestService.editContacts(editContact).then(() => {
-            SharePointRestService.fetchContacts().then((items) => {
+        SharePointRestService.editContacts(editContact, this.props.listName).then(() => {
+            SharePointRestService.fetchContacts(this.props.listName).then((items) => {
                 this.CONTACTS = items;
                 console.log(this.CONTACTS);
                 this.setState({
@@ -89,8 +107,8 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         this.setState({
             displayedContacts: this.CONTACTS
         })
-        SharePointRestService.addContacts(newContact).then(() => {
-            SharePointRestService.fetchContacts().then((items) => {
+        SharePointRestService.addContacts(newContact, this.props.listName).then(() => {
+            SharePointRestService.fetchContacts(this.props.listName).then((items) => {
                 this.CONTACTS = items;
                 console.log(this.CONTACTS);
                 this.setState({

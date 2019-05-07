@@ -10,6 +10,7 @@ import {
 import * as strings from 'ContactListTeamsTabWebPartStrings';
 import ContactListTeamsTab from './components/ContactListTeamsTab';
 import { IContactListTeamsTabProps } from './components/IContactListTeamsTabProps';
+import {SharePointRestService} from './services/SharePointRestService'
 
 
 export interface IContactListTeamsTabWebPartProps {
@@ -18,11 +19,25 @@ export interface IContactListTeamsTabWebPartProps {
 
 export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IContactListTeamsTabWebPartProps> {
 
+  public onInit(): Promise<void> {
+    if(!this.properties.listName) {
+      this.properties.listName = strings.NameDefault;
+    }
+    
+    SharePointRestService.checkListExistance(this.properties.listName);
+    
+    return Promise.resolve();
+  }
+
+  public onAfterPropertyPaneChangesApplied() {
+    SharePointRestService.checkListExistance(this.properties.listName);
+  }
+  
   public render(): void {
     const element: React.ReactElement<IContactListTeamsTabProps > = React.createElement(
       ContactListTeamsTab,
       {
-        description: this.properties.listName
+        listName: this.properties.listName
       }
     );
 
@@ -31,6 +46,10 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
 
   protected onDispose(): void {
     ReactDom.unmountComponentAtNode(this.domElement);
+  }
+
+  protected get disableReactivePropertyChanges() : boolean {
+    return true;
   }
 
   protected get dataVersion(): Version {

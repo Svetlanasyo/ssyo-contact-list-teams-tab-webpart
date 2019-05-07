@@ -3,7 +3,8 @@ define([], function() {
     "PropertyPaneDescription": "Description",
     "BasicGroupName": "Group Name",
     "ListNameFieldLabel": "Entere List Title",
-    "ErrorMessage": "List Title field can not be empty"
+    "ErrorMessage": "List Title field can not be empty",
+    "NameDefault": "List"
 
   }
 });

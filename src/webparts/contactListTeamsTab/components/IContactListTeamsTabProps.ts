@@ -1,3 +1,3 @@
 export interface IContactListTeamsTabProps {
-  description: string;
+  listName: string;
 }
