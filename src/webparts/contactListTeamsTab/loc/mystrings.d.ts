@@ -1,7 +1,9 @@
 declare interface IContactListTeamsTabWebPartStrings {
   PropertyPaneDescription: string;
   BasicGroupName: string;
-  DescriptionFieldLabel: string;
+  ListNameFieldLabel: string;
+  ErrorMessage: string;
+  NameDefault: string;
 }
 
 declare module 'ContactListTeamsTabWebPartStrings' {

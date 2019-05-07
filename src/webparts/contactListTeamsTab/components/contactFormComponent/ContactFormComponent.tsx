@@ -12,6 +12,7 @@ export interface IFormComponentState {
     file: File;
     errorNameMessage: string;
     errorPhoneMessage: string;
+    buttonName: string;
 }
 
 export class ContactFormComponent extends React.Component<any, IFormComponentState> {
@@ -21,14 +22,15 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            phone: '',
-            email: '',
-            image: '',
+            name: props.name || '',
+            phone: props.phone || '',
+            email: props.email || '',
+            image: props.image || '',
             id: this.props.id,
             file: null,
             errorNameMessage: '',
             errorPhoneMessage:'',
+            buttonName: props.buttonName || 'Create',
         }
         this.onAdd = this.props.onSubmit;
     }
@@ -72,6 +74,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <input type="text" 
                     placeholder="Enter name"
                     required 
+                    value={this.state.name}
                     onChange={(event) => {
                         this.isValidateLength(event, 30) ? this.setState({errorNameMessage:'Your name must be only 30 symbols'}):
                         this.setState({name: event.target.value, errorNameMessage: ""});
@@ -82,6 +85,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <input type="number" 
                     placeholder="Enter Phone Number"
                     required 
+                    value={this.state.phone}
                     onChange={(event) => {
                         this.isValidateLength(event, 10) ? this.setState({errorPhoneMessage:'Your phone must be only 10 symbols'}):
                         this.setState({phone: event.target.value, errorPhoneMessage:""})
@@ -90,8 +94,9 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             <label>Contact e-mail: </label>
             <input type="email" 
                     placeholder="Enter email" 
-                    required 
-                    onChange={(event) => this.setState({email: event.target.value})}/>
+                    onChange={(event) => this.setState({email: event.target.value})}
+                    required
+                    value={this.state.email}/>
             
             <div className="files">
             <label>Photo: </label>
@@ -99,7 +104,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                 className={styles.filesDropzone}
                 onChange={this.onFilesChange.bind(this)}
                 onError={this.onFilesError.bind(this)}
-                accepts={['image/png',]}
+                accepts={['image/*',]}
                 maxFiles={1}
                 maxFileSize={1000000}
                 minFileSize={0}
@@ -109,7 +114,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                 </Files>
             </div>
 
-            <button type="submit">Create</button>
+            <button type="submit">{this.state.buttonName}</button>
         </form>
         )
     }

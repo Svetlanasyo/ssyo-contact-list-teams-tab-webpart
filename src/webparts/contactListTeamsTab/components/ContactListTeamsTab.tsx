@@ -10,7 +10,8 @@ export default class ContactListTeamsTab extends React.Component<IContactListTea
         <div className={ styles.container }>
           <div className={ styles.row }>
             <div className={ styles.column }>
-              <ContactListComponent/>
+              <ContactListComponent
+              listName={this.props.listName}/>
             </div>
           </div>
         </div>
