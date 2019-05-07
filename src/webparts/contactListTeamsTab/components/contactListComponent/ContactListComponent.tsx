@@ -5,6 +5,7 @@ import * as _ from '@microsoft/sp-lodash-subset';
 import {SharePointRestService} from '../../services/SharePointRestService'
 import styles from "./ContactListComponent.module.scss";
 import Pagination from "react-js-pagination";
+import {Environment, EnvironmentType} from '@microsoft/sp-core-library';
 
 export interface IContactListComponentState {
     displayedContacts: any[];
@@ -29,22 +30,29 @@ export class ContactListComponent extends React.Component<{}, IContactListCompon
         email: 'leia@starwars.com'
     }]
 
+    
+
     constructor() {
-        super({})
-        this.state = 
-        {
-            displayedContacts: this.CONTACTS,
+        super({});
+        this.state = {
+            displayedContacts: [],
             isAdd: false,
             activePage: 1,
         }
-        SharePointRestService.fetchContacts().then((items) => {
-            this.CONTACTS = items;
-            console.log(this.CONTACTS);
+        if (Environment.type === EnvironmentType.Local) {
             this.setState({
-                displayedContacts: this.CONTACTS
+                displayedContacts: this.CONTACTS,
             })
-        })
+        } else {
+            SharePointRestService.fetchContacts().then((items) => {
+                this.CONTACTS = items;
+                console.log(this.CONTACTS);
+                this.setState({
+                    displayedContacts: this.CONTACTS,
+                })
+            })
         }
+    }
 
     handleSearch(event) {
         var searchQuery = event.target.value.toLowerCase();
