@@ -48,4 +48,31 @@ export class SharePointRestService {
         }
         );
     }
+
+    public async checkListExistance(listName: string) {
+        try {
+            let {list: {fields}} = await sp.web.lists.ensure(listName);
+            
+            try {
+                await fields.getByInternalNameOrTitle("Title").get();
+            } catch {
+                fields.addText("Title");
+            }
+            
+            try {
+                await fields.getByInternalNameOrTitle("Phone").get();
+            } catch {
+                fields.addBoolean("Phone");
+            }
+
+            try {
+                await fields.getByInternalNameOrTitle("Email").get();
+            } catch {
+                fields.addBoolean("Email");
+            }
+        }
+        catch(err) {
+            console.log(err)
+        }
+    }
 }
