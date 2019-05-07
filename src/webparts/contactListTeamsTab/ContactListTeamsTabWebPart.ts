@@ -11,8 +11,9 @@ import * as strings from 'ContactListTeamsTabWebPartStrings';
 import ContactListTeamsTab from './components/ContactListTeamsTab';
 import { IContactListTeamsTabProps } from './components/IContactListTeamsTabProps';
 
+
 export interface IContactListTeamsTabWebPartProps {
-  description: string;
+  listName: string;
 }
 
 export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IContactListTeamsTabWebPartProps> {
@@ -21,7 +22,7 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
     const element: React.ReactElement<IContactListTeamsTabProps > = React.createElement(
       ContactListTeamsTab,
       {
-        description: this.properties.description
+        description: this.properties.listName
       }
     );
 
@@ -36,6 +37,14 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
     return Version.parse('1.0');
   }
 
+  private validateMessage(name: string) {
+    if(name.trim().length === 0) {
+      return strings.ErrorMessage;
+    }
+
+    return "";
+}
+
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
@@ -47,8 +56,9 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('listName', {
+                  label: strings.ListNameFieldLabel,
+                  onGetErrorMessage: this.validateMessage,
                 })
               ]
             }

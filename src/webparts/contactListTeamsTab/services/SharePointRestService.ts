@@ -7,8 +7,8 @@ export class SharePointRestService {
     static fetchContacts() {
         return sp.web.lists.getByTitle("Contact List")
             .items.get()
-            .then((items) => Promise.all(items.map(({ Id, Title, j1d0, z4n7 }) =>
-                this.fetchAttachement(Id).then(attachment => ({ name: Title, email: j1d0, phone: z4n7, id: Id, image: attachment })))))
+            .then((items) => Promise.all(items.map(({ Id, Title, Email, Phone }) =>
+                this.fetchAttachement(Id).then(attachment => ({ name: Title, email: Email, phone: Phone, id: Id, image: attachment })))))
     }
 
     static fetchAttachement(Id) {
@@ -18,8 +18,8 @@ export class SharePointRestService {
     static addContacts(contact) {
         return sp.web.lists.getByTitle("Contact List").items.add({
             Title: contact.name,
-            j1d0: contact.email,
-            z4n7: contact.phone,
+            Email: contact.email,
+            Phone: contact.phone,
             // Id: contact.id,
         }).then((iar: ItemAddResult) => {
             
@@ -32,8 +32,8 @@ export class SharePointRestService {
     static editContacts(contact) {
         return sp.web.lists.getByTitle("Contact List").items.getById(contact.id).update({
             Title: contact.name,
-            j1d0: contact.email,
-            z4n7: contact.phone,
+            Email: contact.email,
+            Phone: contact.phone,
         }).then((iar: ItemAddResult) => {
             console.log(iar.data)
             return sp.web.lists.getByTitle("Contact List").items.getById(contact.id)
