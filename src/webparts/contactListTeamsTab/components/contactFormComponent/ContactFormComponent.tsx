@@ -12,6 +12,7 @@ export interface IFormComponentState {
     file: File;
     errorNameMessage: string;
     errorPhoneMessage: string;
+    buttonName: string;
 }
 
 export class ContactFormComponent extends React.Component<any, IFormComponentState> {
@@ -29,6 +30,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             file: null,
             errorNameMessage: '',
             errorPhoneMessage:'',
+            buttonName: props.buttonName || 'Create',
         }
         this.onAdd = this.props.onSubmit;
     }
@@ -112,7 +114,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                 </Files>
             </div>
 
-            <button type="submit">Create</button>
+            <button type="submit">{this.state.buttonName}</button>
         </form>
         )
     }
