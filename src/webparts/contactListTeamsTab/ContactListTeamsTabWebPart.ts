@@ -10,18 +10,34 @@ import {
 import * as strings from 'ContactListTeamsTabWebPartStrings';
 import ContactListTeamsTab from './components/ContactListTeamsTab';
 import { IContactListTeamsTabProps } from './components/IContactListTeamsTabProps';
+import {SharePointRestService} from './services/SharePointRestService'
+
 
 export interface IContactListTeamsTabWebPartProps {
-  description: string;
+  listName: string;
 }
 
 export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IContactListTeamsTabWebPartProps> {
 
+  public onInit(): Promise<void> {
+    if(!this.properties.listName) {
+      this.properties.listName = strings.NameDefault;
+    }
+    
+    SharePointRestService.checkListExistance(this.properties.listName);
+    
+    return Promise.resolve();
+  }
+
+  public onAfterPropertyPaneChangesApplied() {
+    SharePointRestService.checkListExistance(this.properties.listName);
+  }
+  
   public render(): void {
     const element: React.ReactElement<IContactListTeamsTabProps > = React.createElement(
       ContactListTeamsTab,
       {
-        description: this.properties.description
+        listName: this.properties.listName
       }
     );
 
@@ -32,9 +48,21 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
     ReactDom.unmountComponentAtNode(this.domElement);
   }
 
+  protected get disableReactivePropertyChanges() : boolean {
+    return true;
+  }
+
   protected get dataVersion(): Version {
     return Version.parse('1.0');
   }
+
+  private validateMessage(name: string) {
+    if(name.trim().length === 0) {
+      return strings.ErrorMessage;
+    }
+
+    return "";
+}
 
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
@@ -47,8 +75,9 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('listName', {
+                  label: strings.ListNameFieldLabel,
+                  onGetErrorMessage: this.validateMessage,
                 })
               ]
             }
