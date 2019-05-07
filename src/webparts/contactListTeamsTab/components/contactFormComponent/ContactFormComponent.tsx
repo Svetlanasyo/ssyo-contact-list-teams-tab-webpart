@@ -102,7 +102,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                 className={styles.filesDropzone}
                 onChange={this.onFilesChange.bind(this)}
                 onError={this.onFilesError.bind(this)}
-                accepts={['image/png',]}
+                accepts={['image/*',]}
                 maxFiles={1}
                 maxFileSize={1000000}
                 minFileSize={0}
