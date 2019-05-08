@@ -17,5 +17,5 @@ export default class ContactListTeamsTab extends React.Component<IContactListTea
         </div>
       </div>
     );
-  }
+  };
 }
