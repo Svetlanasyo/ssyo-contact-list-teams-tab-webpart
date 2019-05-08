@@ -143,12 +143,18 @@ export class ContactListComponent extends React.Component<IContactListComponentP
         }
 
         return (
-            <div className="contacts">
+        <div className="contacts">
                 <div className="create-form">
-                <button className={styles.addButton} onClick={this.handleAdd.bind(this)}>Add new contact</button>
+                <button className={styles.addButton} 
+                        onClick={this.handleAdd.bind(this)}>
+                Add new contact</button>
                 {showCreateForm}
                 </div>
-                <input type="text" className={styles.searchField} onChange={this.handleSearch.bind(this)} placeholder="Search" />
+            <div style={{display: !this.state.isAdd ? 'block' : 'none'}}>
+                <input type="text" 
+                        className={styles.searchField} 
+                        onChange={this.handleSearch.bind(this)} 
+                        placeholder="Search"></input>
                 <div className={styles.pagination}>
                     <Pagination
                     activePage={this.state.activePage}
@@ -158,7 +164,7 @@ export class ContactListComponent extends React.Component<IContactListComponentP
                     onChange={this.handlePageChange.bind(this)}
                     />
                 </div>
-                <ul className={styles.contactList}>
+                <ul className={styles.contactList} >
                     {   
                        this.state.displayedContacts
                        .slice((this.state.activePage-1)*2, (this.state.activePage-1)*2+2)
@@ -177,6 +183,8 @@ export class ContactListComponent extends React.Component<IContactListComponentP
                     }
                 </ul>
             </div>
+        </div>
+
         );
     }
 };
