@@ -40,24 +40,27 @@ export class SharePointRestService {
                 Title: contact.name,
                 Email: contact.email,
                 Phone: contact.phone,})
-            .then((iar: ItemAddResult) => {
-                return sp.web.lists.getByTitle(listName).items.getById(contact.id)
-                    .attachmentFiles.get().then((v) => {
-                        return sp.web.lists.getByTitle(listName)
-                            .items.getById(contact.id)
-                            // .attachmentFiles.getByName(v[0] ? v[0].FileName : "")
-                            // .setContent(contact.file)
-                            // .catch((error) => {
-                            //     return sp.web.lists.getByTitle(listName)
-                            //         .items.getById(contact.id)
-                                    .attachmentFiles
-                                    .deleteMultiple(v[0].FileName)}).then((v) => {
-                                        return sp.web.lists.getByTitle(listName)
-                                        .items.getById(contact.id)
-                                        .attachmentFiles
-                                        .add(contact.file.name, contact.file)
-                                    })
-                                })
+            .then(async(iar: ItemAddResult) => {
+                try {
+                    let actualList = await sp.web.lists.getByTitle(listName);
+                    let actualRow = await actualList
+                                        .items.getById(contact.id);
+                    let actualAttachments = await actualRow
+                                            .attachmentFiles.get();
+                    if (!actualAttachments[0]) {
+                        var fileName = contact.file.name 
+                    } else {
+                    let fileName = actualAttachments[0].FileName;
+                    await actualRow.attachmentFiles.deleteMultiple(fileName);
+                    }
+                    await actualRow.attachmentFiles.add(fileName, contact.file)
+                    
+                                            
+                } catch(err) {
+                    console.log(err)
+                }
+            })
+                               
     };
 
     static async checkListExistance(listName: string) {

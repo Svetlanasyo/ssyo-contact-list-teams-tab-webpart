@@ -12,6 +12,7 @@ export interface IFormComponentState {
     file: File;
     errorNameMessage: string;
     errorPhoneMessage: string;
+    errorFileMessage: string;
     buttonName: string;
 };
 
@@ -31,6 +32,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             errorNameMessage: '',
             errorPhoneMessage:'',
             buttonName: props.buttonName || 'Create',
+            errorFileMessage: '',
         };
         this.onAdd = this.props.onSubmit;
     };
@@ -57,8 +59,9 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
     };
 
     public onFilesError(error) {
-        let errorMessage = error.message;
-        return errorMessage;
+        this.setState({
+            errorFileMessage: error.message
+        });
     };
 
     public isValidateLength(e, maxLength) { 
@@ -108,7 +111,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                 onError={this.onFilesError.bind(this)}
                 accepts={['image/*',]}
                 maxFiles={1}
-                maxFileSize={3000000}
+                maxFileSize={500000}
                 minFileSize={0}
                 clickable
                 >
@@ -116,7 +119,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                     alt='Drop file' 
                     width="50px" 
                     height="50px" />
-                <label className={styles.errorMessage}>{this.props.onError}</label>
+                <label className={styles.errorMessage}>{this.state.errorFileMessage}</label>
                 </Files>
             </div>
 

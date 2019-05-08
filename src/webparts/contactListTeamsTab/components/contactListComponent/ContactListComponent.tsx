@@ -82,11 +82,11 @@ export class ContactListComponent extends React.Component<IContactListComponentP
     };
 
     handleEdit(editContact) {
-        let index = _.findIndex(this.CONTACTS, (contact) => contact.id === editContact.id);
-        this.CONTACTS.splice(index - 1, 1, editContact);
-        this.setState({
-            displayedContacts: this.CONTACTS
-        }); 
+        // let index = _.findIndex(this.CONTACTS, (contact) => contact.id === editContact.id);
+        // this.CONTACTS.splice(index - 1, 1, editContact);
+        // this.setState({
+        //     displayedContacts: this.CONTACTS
+        // }); 
         SharePointRestService.editContacts(editContact, this.props.listName).then(() => {
             SharePointRestService.fetchContacts(this.props.listName).then((items) => {
                 this.CONTACTS = items;
