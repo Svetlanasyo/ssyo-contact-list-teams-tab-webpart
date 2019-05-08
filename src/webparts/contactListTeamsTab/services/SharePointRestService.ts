@@ -1,4 +1,5 @@
 import { sp, ItemAddResult } from '@pnp/sp';
+import {AttachmentFileAddResult} from '@pnp/sp';
 
 
 export class SharePointRestService {
@@ -44,15 +45,19 @@ export class SharePointRestService {
                     .attachmentFiles.get().then((v) => {
                         return sp.web.lists.getByTitle(listName)
                             .items.getById(contact.id)
-                            .attachmentFiles.getByName(v[0] ? v[0].FileName : "")
-                            .setContent(contact.file)
-                            .catch((error) => {
-                                return sp.web.lists.getByTitle(listName)
-                                    .items.getById(contact.id)
+                            // .attachmentFiles.getByName(v[0] ? v[0].FileName : "")
+                            // .setContent(contact.file)
+                            // .catch((error) => {
+                            //     return sp.web.lists.getByTitle(listName)
+                            //         .items.getById(contact.id)
                                     .attachmentFiles
-                                    .add(contact.file.name, contact.file);});
-                    });
-            });
+                                    .deleteMultiple(v[0].FileName)}).then((v) => {
+                                        return sp.web.lists.getByTitle(listName)
+                                        .items.getById(contact.id)
+                                        .attachmentFiles
+                                        .add(contact.file.name, contact.file)
+                                    })
+                                })
     };
 
     static async checkListExistance(listName: string) {

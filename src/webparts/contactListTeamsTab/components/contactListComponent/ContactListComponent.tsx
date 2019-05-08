@@ -124,7 +124,6 @@ export class ContactListComponent extends React.Component<IContactListComponentP
     };
 
     handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
         this.setState({activePage: pageNumber});
     };
 

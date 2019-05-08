@@ -56,8 +56,9 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
         };
     };
 
-    public onFilesError(error, file) {
-        console.log('error code '+error.code + ': ' + error.message);
+    public onFilesError(error) {
+        let errorMessage = error.message;
+        return errorMessage;
     };
 
     public isValidateLength(e, maxLength) { 
@@ -107,11 +108,15 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                 onError={this.onFilesError.bind(this)}
                 accepts={['image/*',]}
                 maxFiles={1}
-                maxFileSize={1000000}
+                maxFileSize={3000000}
                 minFileSize={0}
                 clickable
                 >
-                Drop files here or click to upload
+                <img src={this.state.image} 
+                    alt='Drop file' 
+                    width="50px" 
+                    height="50px" />
+                <label className={styles.errorMessage}>{this.props.onError}</label>
                 </Files>
             </div>
 
