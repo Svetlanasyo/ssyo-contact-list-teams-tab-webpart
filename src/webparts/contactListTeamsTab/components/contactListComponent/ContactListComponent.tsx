@@ -105,6 +105,7 @@ export class ContactListComponent extends React.Component<IContactListComponentP
             displayedContacts: this.CONTACTS
         });
         SharePointRestService.addContacts(newContact, this.props.listName).then(() => {
+            alert("Congratulation! Your contact have added")
             SharePointRestService.fetchContacts(this.props.listName).then((items) => {
                 this.CONTACTS = items;
                 console.log(this.CONTACTS);
@@ -154,7 +155,7 @@ export class ContactListComponent extends React.Component<IContactListComponentP
                     <div className={styles.pagination}>
                         <Pagination
                         activePage={this.state.activePage}
-                        itemsCountPerPage={2}
+                        itemsCountPerPage={4} 
                         totalItemsCount={this.state.displayedContacts.length}
                         pageRangeDisplayed={5}
                         onChange={this.handlePageChange.bind(this)}
@@ -163,7 +164,7 @@ export class ContactListComponent extends React.Component<IContactListComponentP
                     <ul className={styles.contactList} >
                         {   
                         this.state.displayedContacts
-                        .slice((this.state.activePage-1)*2, (this.state.activePage-1)*2+2)
+                        .slice((this.state.activePage-1)*4, (this.state.activePage-1)*4+4)
                         .map((el) => {
                                 return <ContactComponent
                                     key={el.id}

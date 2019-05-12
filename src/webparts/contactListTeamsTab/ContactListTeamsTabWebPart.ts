@@ -1,24 +1,27 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
 import { Version } from '@microsoft/sp-core-library';
-import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import {IPropertyPaneConfiguration, PropertyPaneTextField} from '@microsoft/sp-property-pane';
+import { BaseClientSideWebPart, PropertyPaneDropdown } from '@microsoft/sp-webpart-base';
+import {IPropertyPaneConfiguration, PropertyPaneTextField, IPropertyPaneDropdownOption} from '@microsoft/sp-property-pane';
 import * as strings from 'ContactListTeamsTabWebPartStrings';
 import ContactListTeamsTab from './components/ContactListTeamsTab';
 import { IContactListTeamsTabProps } from './components/IContactListTeamsTabProps';
 import {SharePointRestService} from './services/SharePointRestService'
+import { sp, ItemAddResult } from '@pnp/sp';
 
 
 export interface IContactListTeamsTabWebPartProps {
   listName: string;
+  newListName: string;
+  availableLists: IPropertyPaneDropdownOption[];
 };
 
 export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IContactListTeamsTabWebPartProps> {
 
   public onInit(): Promise<void> {
-    if(!this.properties.listName) {
-      this.properties.listName = strings.NameDefault;
-    };
+      sp.web.lists.get().then((items) => {
+        this.properties.availableLists = items.map((item) => ({key: item.Title, text: item.Title}));
+      })
     
     SharePointRestService.checkListExistance(this.properties.listName);
     
@@ -26,7 +29,14 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
   };
 
   public onAfterPropertyPaneChangesApplied() {
-    SharePointRestService.checkListExistance(this.properties.listName);
+   
+    if (this.properties.newListName) {
+      SharePointRestService.checkListExistance(this.properties.newListName).then(() =>{
+        sp.web.lists.get().then((items) => {
+          this.properties.availableLists = items.map((item) => ({key: item.Title, text: item.Title}));
+        })
+      })
+    } 
   };
   
   public render(): void {
@@ -70,8 +80,12 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('listName', {
+                PropertyPaneDropdown('listName', {
                   label: strings.ListNameFieldLabel,
+                  options: this.properties.availableLists,
+                }),
+                PropertyPaneTextField('newListName', {
+                  label: 'Create List',
                   onGetErrorMessage: this.validateMessage,
                 })
               ]

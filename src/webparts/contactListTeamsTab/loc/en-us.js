@@ -2,7 +2,7 @@ define([], function() {
   return {
     "PropertyPaneDescription": "Description",
     "BasicGroupName": "Group Name",
-    "ListNameFieldLabel": "Entere List Title",
+    "ListNameFieldLabel": "Choose List",
     "ErrorMessage": "List Title field can not be empty",
     "NameDefault": "List"
 
