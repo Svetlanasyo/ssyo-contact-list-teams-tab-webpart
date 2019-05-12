@@ -34,9 +34,11 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
       SharePointRestService.checkListExistance(this.properties.newListName).then(() =>{
         sp.web.lists.get().then((items) => {
           this.properties.availableLists = items.map((item) => ({key: item.Title, text: item.Title}));
+          this.context.propertyPane.refresh()
         })
       })
-    } 
+    }
+    console.log(this.properties.listName) 
   };
   
   public render(): void {
@@ -86,7 +88,6 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
                 }),
                 PropertyPaneTextField('newListName', {
                   label: 'Create List',
-                  onGetErrorMessage: this.validateMessage,
                 })
               ]
             }

@@ -76,13 +76,13 @@ export class SharePointRestService {
             try {
                 await fields.getByInternalNameOrTitle("Phone").get();
             } catch {
-                fields.addBoolean("Phone");
+                fields.addText("Phone");
             };
 
             try {
                 await fields.getByInternalNameOrTitle("Email").get();
             } catch {
-                fields.addBoolean("Email");
+                fields.addText("Email");
             };
         }
         catch(err) {
