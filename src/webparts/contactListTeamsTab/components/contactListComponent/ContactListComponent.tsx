@@ -20,20 +20,23 @@ export interface IContactListComponentProps {
 export class ContactListComponent extends React.Component<IContactListComponentProps, 
                                                     IContactListComponentState> {
 
-    private CONTACTS = [{
-        id: 1,
-        name: 'Darth Vader',
-        phone: '+250966666666',
-        image: 'http://cs7.pikabu.ru/images/big_size_comm_an/2014-03_7/13962622876915.gif',
-        email: 'vader@starwars.com',
+    private CONTACTS = [
+        // {
+        //     id: 1,
+        //     name: 'Darth Vader',
+        //     phone: '+250966666666',
+        //     image: 'http://cs7.pikabu.ru/images/big_size_comm_an/2014-03_7/13962622876915.gif',
+        //     email: 'vader@starwars.com',
 
-    }, {
-        id: 2,
-        name: 'Princess Leia',
-        phone: '+250966344466',
-        image: 'http://images6.fanpop.com/image/photos/33100000/CARRIE-FISHER-anakin-vader-and-princess-leia-33186069-190-149.gif',
-        email: 'leia@starwars.com'
-    }];
+        // }, {
+        //     id: 2,
+        //     name: 'Princess Leia',
+        //     phone: '+250966344466',
+        //     image: 'http://images6.fanpop.com/image/photos/33100000/CARRIE-FISHER-anakin-vader-and-princess-leia-33186069-190-149.gif',
+        //     email: 'leia@starwars.com'
+        // }
+        ...JSON.parse(localStorage.getItem('contact-list') || '[]')
+    ];
 
     constructor(props) {
         super(props);
@@ -82,11 +85,18 @@ export class ContactListComponent extends React.Component<IContactListComponentP
     };
 
     handleEdit(editContact) {
-        // let index = _.findIndex(this.CONTACTS, (contact) => contact.id === editContact.id);
-        // this.CONTACTS.splice(index - 1, 1, editContact);
-        // this.setState({
-        //     displayedContacts: this.CONTACTS
-        // }); 
+        let index = _.findIndex(this.CONTACTS, (contact) => contact.id === editContact.id);
+        
+        if(index >= 0) {
+            this.CONTACTS[index] = editContact;
+
+            this.setState({
+                displayedContacts: this.CONTACTS
+            }); 
+
+            
+            localStorage.setItem('contact-list', JSON.stringify(this.CONTACTS));
+        }
         SharePointRestService.editContacts(editContact, this.props.listName).then(() => {
             SharePointRestService.fetchContacts(this.props.listName).then((items) => {
                 this.CONTACTS = items;
@@ -104,6 +114,7 @@ export class ContactListComponent extends React.Component<IContactListComponentP
         this.setState({
             displayedContacts: this.CONTACTS
         });
+        localStorage.setItem('contact-list', JSON.stringify(this.CONTACTS));
         SharePointRestService.addContacts(newContact, this.props.listName).then(() => {
             alert("Congratulation! Your contact have added")
             SharePointRestService.fetchContacts(this.props.listName).then((items) => {
