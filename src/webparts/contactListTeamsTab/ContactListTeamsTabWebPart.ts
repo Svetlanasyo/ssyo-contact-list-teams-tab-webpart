@@ -63,14 +63,6 @@ export default class ContactListTeamsTabWebPart extends BaseClientSideWebPart<IC
     return Version.parse('1.0');
   };
 
-  private validateMessage(name: string) {
-    if(name.trim().length === 0) {
-      return strings.ErrorMessage;
-    };
-
-    return "";
-};
-
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [

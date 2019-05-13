@@ -4,7 +4,22 @@ define([], function() {
       "BasicGroupName": "Nazwa Grupy",
       "ListNameFieldLabel": "Wybierz Liste",
       "ErrorMessage": "To pole nie może być pustę",
-      "NameDefault": "Lista"
-  
+      "NameDefault": "Lista",
+      "PhonLabel": "Telefon: ",
+      "EMailLabel": "E-mail: ",
+      "Edit": "Edytuj",
+      "Update": "Aktualizuj",
+      "Create": "Dodaj",
+      "NameLabel": "Imie: ",
+      "PlaceholderName": "Wprowadz imie kontaktu",
+      "ErrorNameMessage": "Imie musi zawierać mniej niż 30 znaków",
+      "PlaceholderPhone": "Wprowadż numer telefonu 22 222 22 22 lub 222 222 222",
+      "ErrorPhoneMessage": "Numer telefonu musi zawierać mniej niż 12 znaków",
+      "PlaceholderEmail": "Wprowadż adres mailowy",
+      "ImageLabel": "Zdjęcie: ",
+      "AltImageInfo": "Dodaj zdjęcie",
+      "AlertCreateMessage": "Gratulacje! Kontakt zostal dodany",
+      "AddNewContact": "Dodaj Nowy Kontakt",
+      "PlaceholderSearch": "Szukaj ...",
     }
   });

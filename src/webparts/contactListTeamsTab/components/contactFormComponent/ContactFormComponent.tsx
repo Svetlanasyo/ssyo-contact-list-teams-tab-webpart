@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Files from 'react-files';
-
+import * as strings from 'ContactListTeamsTabWebPartStrings';
 import styles from "./ContactFormComponent.module.scss";
 
 export interface IFormComponentState {
@@ -31,7 +31,7 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
             file: null,
             errorNameMessage: '',
             errorPhoneMessage:'',
-            buttonName: props.buttonName || 'Create',
+            buttonName: props.buttonName || strings.Create,
             errorFileMessage: '',
         };
         this.onAdd = this.props.onSubmit;
@@ -75,36 +75,36 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
         return (
         <form onSubmit={this.handleSubmit.bind(this)} 
                 className={styles.generalForm}>
-            <label>Contact name: </label>
+            <label>{ strings.NameLabel } </label>
             <input type="text" 
-                    placeholder="Enter name"
+                    placeholder={ strings.PlaceholderName }
                     required 
                     value={this.state.name}
                     onChange={(event) => {
-                        this.isValidateLength(event, 30) ? this.setState({errorNameMessage:'Your name must be only 30 symbols'}):
+                        this.isValidateLength(event, 30) ? this.setState({errorNameMessage: strings.ErrorNameMessage}):
                         this.setState({name: event.target.value, errorNameMessage: ""});
                     } }/>
             <label className={styles.errorMessage}>{this.state.errorNameMessage}</label>
                     
-            <label>Contact phone: </label>
+            <label>{strings.PhoneLabel}</label>
             <input type="number" 
-                    placeholder="Enter Phone Number"
+                    placeholder={ strings.PlaceholderPhone }
                     required 
                     value={this.state.phone}
                     onChange={(event) => {
-                        this.isValidateLength(event, 10) ? this.setState({errorPhoneMessage:'Your phone must be only 10 symbols'}):
+                        this.isValidateLength(event, 10) ? this.setState({errorPhoneMessage:strings.ErrorPhoneMessage}):
                         this.setState({phone: event.target.value, errorPhoneMessage:""})
                     }}/>
             <label className={styles.errorMessage}>{this.state.errorPhoneMessage}</label>
-            <label>Contact e-mail: </label>
+            <label>{ strings.EMailLabel }</label>
             <input type="email" 
-                    placeholder="Enter email" 
+                    placeholder={ strings.PlaceholderEmail } 
                     onChange={(event) => this.setState({email: event.target.value})}
                     required
                     value={this.state.email}/>
             
             <div className="files">
-            <label>Photo: </label>
+            <label>{ strings.ImageLabel }</label>
             <Files
                 className={styles.filesDropzone}
                 onChange={this.onFilesChange.bind(this)}
@@ -116,11 +116,11 @@ export class ContactFormComponent extends React.Component<any, IFormComponentSta
                 clickable
                 >
                 <img src={this.state.image} 
-                    alt='Drop file' 
+                    alt={ strings.AltImageInfo } 
                     width="50px" 
                     height="50px" />
                 <label className={styles.errorMessage}>{this.state.errorFileMessage}</label>
-                </Files>
+            </Files>
             </div>
 
             <button type="submit">{this.state.buttonName}</button>

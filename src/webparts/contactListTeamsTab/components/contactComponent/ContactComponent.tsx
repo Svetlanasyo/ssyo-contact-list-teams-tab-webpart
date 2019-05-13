@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {ContactFormComponent} from '../contactFormComponent/ContactFormComponent'
-
+import {ContactFormComponent} from '../contactFormComponent/ContactFormComponent';
+import * as strings from 'ContactListTeamsTabWebPartStrings';
 import styles from './ContactComponent.module.scss';
 
 export interface IContactComponentState {
@@ -37,12 +37,12 @@ export class ContactComponent extends React.Component<any, IContactComponentStat
         if(this.state.isOpened) {
             detailedInfo = (<React.Fragment>
                 <div className="contact-number"> 
-                    <label className={styles.detailedInfoLabel}>Phone:</label>
-                    <span className={styles.detailedInfoSpan}>{this.props.phone}</span>
+                    <label className={styles.detailedInfoLabel}>{ strings.PhoneLabel }</label>
+                    <span className={styles.detailedInfoSpan}>{ this.props.phone }</span>
                 </div>
                 <div className="contact-email">
-                    <label className={styles.detailedInfoLabel}>E-mail: </label>
-                    <span className={styles.detailedInfoSpan}>{this.props.email}</span>
+                    <label className={styles.detailedInfoLabel}>{ strings.EMailLabel }</label>
+                    <span className={styles.detailedInfoSpan}>{ this.props.email }</span>
                 </div>
             </React.Fragment>
         )};
@@ -54,8 +54,8 @@ export class ContactComponent extends React.Component<any, IContactComponentStat
                                                 phone={this.props.phone}
                                                 id={this.props.id}
                                                 onSubmit={(e)=> {this.props.onSubmit(e); this.handleEdit()}}
-                                                image={this.props.image}
-                                                buttonName='Update'/>);
+                                                image={ this.props.image }
+                                                buttonName={ strings.Update }/>);
         }
 
             return (
@@ -75,7 +75,7 @@ export class ContactComponent extends React.Component<any, IContactComponentStat
                         </div>   
                     </li>
                     <button className={styles.editButton} 
-                            onClick={this.handleEdit.bind(this)}>Edit</button>
+                            onClick={this.handleEdit.bind(this)}>{ strings.Edit }</button>
                     {showEditForm}
                 </div>
             );

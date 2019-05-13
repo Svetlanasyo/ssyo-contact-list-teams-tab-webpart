@@ -6,6 +6,7 @@ import {SharePointRestService} from '../../services/SharePointRestService'
 import styles from "./ContactListComponent.module.scss";
 import Pagination from "react-js-pagination";
 import {Environment, EnvironmentType} from '@microsoft/sp-core-library';
+import * as strings from 'ContactListTeamsTabWebPartStrings';
 
 export interface IContactListComponentState {
     displayedContacts: any[];
@@ -116,7 +117,7 @@ export class ContactListComponent extends React.Component<IContactListComponentP
         });
         localStorage.setItem('contact-list', JSON.stringify(this.CONTACTS));
         SharePointRestService.addContacts(newContact, this.props.listName).then(() => {
-            alert("Congratulation! Your contact have added")
+            alert(strings.AlertCreateMessage)
             SharePointRestService.fetchContacts(this.props.listName).then((items) => {
                 this.CONTACTS = items;
                 console.log(this.CONTACTS);
@@ -155,14 +156,14 @@ export class ContactListComponent extends React.Component<IContactListComponentP
                 <div className="create-form">
                     <button className={styles.addButton} 
                             onClick={this.handleAdd.bind(this)}>
-                    Add new contact</button>
+                    { strings.AddNewContact}</button>
                     {showCreateForm}
                 </div>
                 <div style={{display: !this.state.isAdd ? 'block' : 'none'}}>
                     <input type="text" 
                         className={styles.searchField} 
                         onChange={this.handleSearch.bind(this)} 
-                        placeholder="Search"></input>
+                        placeholder={strings.PlaceholderSearch}></input>
                     <div className={styles.pagination}>
                         <Pagination
                         activePage={this.state.activePage}

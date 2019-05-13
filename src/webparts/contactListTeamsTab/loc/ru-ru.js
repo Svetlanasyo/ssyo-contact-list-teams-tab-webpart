@@ -1,0 +1,25 @@
+define([], function() {
+    return {
+      "PropertyPaneDescription": "Описание",
+      "BasicGroupName": "Название Группы",
+      "ListNameFieldLabel": "Выбери список",
+      "ErrorMessage": "Это поле не может быть пустым",
+      "NameDefault": "Список",
+      "PhonLabel": "Контактный телефон: ",
+      "EMailLabel": "Адрес электронной почты: ",
+      "Edit": "Редактировать",
+      "Update": "Обновить",
+      "Create": "Создай",
+      "NameLabel": "Имя: ",
+      "PlaceholderName": "Введите имя",
+      "ErrorNameMessage": "Имя должно содержать максимально 30 знаков",
+      "PlaceholderPhone": "Введите номер телефона 22 222 22 22 или 222 222 222",
+      "ErrorPhoneMessage": "Номер телефона должен содержать не более 12 знаков",
+      "PlaceholderEmail": "Введите адрес электронной почты",
+      "ImageLabel": "Фото: ",
+      "AltImageInfo": "Добавь фото",
+      "AlertCreateMessage": "Поздравляем! Ваш контакт записан",
+      "AddNewContact": "Добавь новый контакт",
+      "PlaceholderSearch": "Поиск ...",
+    }
+  });
